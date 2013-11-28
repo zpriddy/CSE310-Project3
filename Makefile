@@ -9,7 +9,7 @@
 #Name the output file here
 EXECUTABLE=run
 # List sources here seperated by a space:
-SOURCES=main.cpp file_io.cpp errors.cpp min_heap.cpp 2d_array.cpp data_ops.cpp
+SOURCES=main.cpp file_io.cpp errors.cpp min_heap.cpp 2d_array.cpp data_ops.cpp vertex.cpp
 # List objects here sperated by a space after $(....o):
 OBJECTS=$(SOURCES:.cpp=.o)
 # Other Settigns

@@ -14,7 +14,7 @@
 #include <cmath>
 #include <stdio.h>
 #include <iostream>
-//#include <cstdlib>
+
 
 using namespace std;
 
@@ -48,18 +48,15 @@ void BuildHeap(HEAP &i_heap, EDGE_T Edge_set[], int Set_Size, heap_type type)
 	
 	int init_size = i_heap.get_size();
 
-
 	//Insert the elements into the Heap in the way that they were given
 	for (int i = init_size ; i < Set_Size+init_size && i < i_heap.get_capacity() ; i++ )
 	{
-
 		InsertToHeap(i_heap, Edge_set[i - init_size], type);
 	}
 
 	//Sort the heap
-	for(int i=floor(i_heap.get_size()/2); i>= 1 ; i--)
+	for(int i= floor(i_heap.get_size()/2); i>= 1 ; i--)
 	{
-		cout << "i = " << i << "\n";
 		Heapify(i_heap, i, type);
 	}
 
@@ -75,18 +72,16 @@ void BuildHeap(HEAP &i_heap, EDGE_T Edge_set[], int Set_Size, heap_type type)
 void InsertToHeap(HEAP &i_heap, EDGE_T i_edge, heap_type type)
 {
 	i_heap.inc_size();
-	//i_heap.set_heap_element(i_heap.get_size(), i_edge);
-	if(i_heap.get_size() >= 1)
+	i_heap.set_heap_element(i_heap.get_size(), i_edge);
+
+	//If min Heap then heapify with each insertation 
+	if( type == min_heap_t)
 	{
-	for(int i = i_heap.get_size() ; i > 0 ; i--)
-	{
-		i_heap.set_heap_element(i, i_heap.get_edge(i-1));
+		 for(int i=floor(i_heap.get_size()/2); i >= 1 ; i--)
+	    {
+	        Heapify(i_heap, i, type);
+	    }
 	}
-	i_heap.set_heap_element(1, i_edge);
-	}
-	else
-		i_heap.set_heap_element(1, i_edge);
-	cout << i_edge.cost << "\n"; 
 }
 
 /******************************************************************************
@@ -109,33 +104,14 @@ void Heapify(HEAP &i_heap, int pos, heap_type type)
 
 			smallest_pos = pos;
 
-			if(right_pos <= i_heap.get_size())
+			if(left_pos <= i_heap.get_size() && i_heap.get_left_child_edge(pos).cost < current_key)
 			{
-				right_key = i_heap.get_right_child_edge(pos).cost;
-				left_key = i_heap.get_left_child_edge(pos).cost;
-
-				if(right_key < i_heap.get_edge(smallest_pos).cost)
-					smallest_pos = right_pos;
-				if(left_key < i_heap.get_edge(smallest_pos).cost)
-					smallest_pos = left_pos;
-
-			}	
-/*
-			if(left_pos <= i_heap.get_size())
-			{
-				left_key = i_heap.get_left_child_edge(pos).cost;
-
-				if(left_key < i_heap.get_edge(smallest_pos).cost)
-					smallest_pos = left_pos;
+				smallest_pos = left_pos;
 			}
-*/
-
-
-
-
-
-
-
+			if(right_pos <= i_heap.get_size() && i_heap.get_right_child_edge(pos).cost < i_heap.get_edge(smallest_pos).cost)
+			{
+				smallest_pos = right_pos;
+			}
 
 			if(smallest_pos != pos)
 			{
@@ -152,8 +128,6 @@ void Heapify(HEAP &i_heap, int pos, heap_type type)
 		break;
 
 		case max_heap_t:
-		
-
 
 			if(left_pos <= i_heap.get_size())
 			{
@@ -190,10 +164,33 @@ void Heapify(HEAP &i_heap, int pos, heap_type type)
 	}
 }
 
+/******************************************************************************
+* FUNCTION: DeleteTopElement(HEAP &i_heap, heap_type type)
+* 
+* DESC: Deletes the max element in the heap, resorts the heap and returns the
+*       element that it deleted.
+*
+* Calls:  InitializeHeap(Capacity)
+*         InsertToHeap(HEAP, Element)
+******************************************************************************/
+EDGE_T DeleteTopElement(HEAP &i_heap, heap_type type)
+{
+    EDGE_T DELETED_EDGE = i_heap.get_edge(1);
+    i_heap.set_heap_element(1, i_heap.get_edge(i_heap.get_size()));
+    i_heap.dec_size();
+
+    for(int i=floor(i_heap.get_size()/2); i >= 1 ; i--)
+    {
+        Heapify(i_heap, i, type);
+    }  
+
+    return DELETED_EDGE; 
+}
+
 void print_heap(HEAP &i_heap)
 {
 	for(int i = 1 ; i <= i_heap.get_size() ; i++)
 	{
-		cout << i_heap.get_edge(i).cost << "\n";
+		cout << i << ": " << i_heap.get_edge(i).cost << "\n";
 	}
 }

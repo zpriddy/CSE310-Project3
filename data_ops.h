@@ -15,17 +15,20 @@
 #ifndef DATA_OPS_H_
 #define DATA_OPS_H_
 
+#include "vertex.h"
+
 struct EDGE_T
 {
-	int v1; //From vertex
-	int v2; //To Vertex
+	VERTEX_T* v1; //From vertex
+	VERTEX_T* v2; //To Vertex
 	int cost; //Cost of edge
 	EDGE_T* root; //Root of set structure
 };
 
-EDGE_T make_edge(int v1, int v2, int cost);
+EDGE_T make_edge(VERTEX_TREE_T &tree , int v1, int v2, int cost);
 void set_edge_root(EDGE_T edge, EDGE_T root);
-EDGE_T* build_edge_set(int** set_table);
+EDGE_T* build_edge_set(VERTEX_TREE_T &tree, VERTEX_T* vertex_set, int** set_table);
+void print_edge_set(EDGE_T* &set, int size);
 
 
 

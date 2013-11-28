@@ -35,7 +35,7 @@ class HEAP
 		//Functions To Read Values
 		int get_size() {return size;}
 		int get_capacity(){ return capacity;}
-		EDGE_T get_edge(int pos){return edges[pos];}
+		EDGE_T get_edge(int pos){return edges[pos-1];}
 
 		//Larger Functions
 		int get_right_child_pos(int pos)
@@ -67,11 +67,12 @@ class HEAP
 		//Functions To Set Values
 		void set_size(int n) {size = n;}
 		void inc_size() {size++;}
+		void dec_size() {size--;}
 
 		//Larget Functions
 		void set_heap_element(int position, EDGE_T edge_element)
 		{
-			this->edges[position] = edge_element;
+			this->edges[position-1] = edge_element;
 		}
 
 
@@ -86,4 +87,5 @@ void BuildHeap(HEAP &i_heap, EDGE_T Edge_set[], int Set_Size, heap_type type);
 void InsertToHeap(HEAP &i_heap, EDGE_T i_edge, heap_type type);
 void Heapify(HEAP &i_heap, int pos, heap_type type);
 void print_heap(HEAP &i_heap);
+EDGE_T DeleteTopElement(HEAP &i_heap, heap_type type);
 #endif
