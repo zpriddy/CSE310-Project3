@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 	BuildHeap(min_heap, edge_set, data_set_size, min_heap_t);
 	cout << "PRINT HEAP : \n";
 	print_heap(min_heap);
-	print_edge_set(edge_set, data_set_size);
+	//print_edge_set(edge_set, data_set_size);
 
 /*
 	VERTEX_T v1 = make_vertex_node(1);
@@ -67,10 +67,25 @@ int main(int argc, char** argv)
 	set_vertex_root(v4, v2);
 */
 	//set_vertex_root(*find_vertex_by_id(vertex_tree, 1), *find_vertex_by_id(vertex_tree, 2));
-	set_vertex_root(vertex_tree, 1, 3);
+	//set_vertex_root(vertex_tree, 1, 3);
+	while(!vertex_mst(vertex_tree))
+	{
+		DeleteTopAndSetRoot(min_heap, vertex_tree, min_heap_t);
+		print_heap(min_heap);
+		print_tree(vertex_tree);
+	}
+	cout << "DONISH";
+	while(min_heap.get_size() >= 1)
+	{
+		DeleteTopAndSetRoot(min_heap, vertex_tree, min_heap_t);
+		print_heap(min_heap);
+		print_tree(vertex_tree);
+	}
+
+	//DeleteTopAndSetRoot(min_heap, vertex_tree, min_heap_t);
+	print_heap(min_heap);
 	print_tree(vertex_tree);
-
-
+	
 	//for(int i = 0 ; i < data_set_size ; i ++ )
 	//{
 	//	cout << edge_set[i].cost << "\n";

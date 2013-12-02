@@ -88,4 +88,5 @@ void InsertToHeap(HEAP &i_heap, EDGE_T i_edge, heap_type type);
 void Heapify(HEAP &i_heap, int pos, heap_type type);
 void print_heap(HEAP &i_heap);
 EDGE_T DeleteTopElement(HEAP &i_heap, heap_type type);
+void DeleteTopAndSetRoot(HEAP &i_heap, VERTEX_TREE_T &tree, heap_type type);
 #endif

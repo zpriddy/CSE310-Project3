@@ -14,11 +14,13 @@
 #include <iostream>
 #include <iomanip>
 
+#include "data_ops.h"
+#include "vertex.h"
+
+
 
 using namespace std;
 
-#include "data_ops.h"
-#include "vertex.h"
 
 
 EDGE_T make_edge(VERTEX_TREE_T &tree , int v1, int v2, int cost)

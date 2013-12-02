@@ -20,6 +20,7 @@ using namespace std;
 
 #include "min_heap.h"
 #include "data_ops.h"
+#include "vertex.h"
 
 HEAP::HEAP(int h_capacity, int h_size)
 {
@@ -187,10 +188,20 @@ EDGE_T DeleteTopElement(HEAP &i_heap, heap_type type)
     return DELETED_EDGE; 
 }
 
+void DeleteTopAndSetRoot(HEAP &i_heap, VERTEX_TREE_T &tree, heap_type type)
+{
+	//set_vertex_root_from_edge(DeleteTopElement(i_heap, type));
+	EDGE_T TEMP = DeleteTopElement(i_heap, type);
+	set_vertex_root(tree, TEMP.v1->ID, TEMP.v2->ID);
+	//set_vertex_root(*TEMP.v1, *TEMP.v2);
+}
+
 void print_heap(HEAP &i_heap)
 {
+	cout << "HEAP: \n";
 	for(int i = 1 ; i <= i_heap.get_size() ; i++)
 	{
-		cout << i << ": " << i_heap.get_edge(i).cost << "\n";
+		cout << i_heap.get_edge(i).cost << ", ";
 	}
+	cout << "\n";
 }

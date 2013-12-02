@@ -12,6 +12,7 @@
 *
 ******************************************************************************/
 
+
 #ifndef DATA_OPS_H_
 #define DATA_OPS_H_
 
@@ -29,7 +30,6 @@ EDGE_T make_edge(VERTEX_TREE_T &tree , int v1, int v2, int cost);
 void set_edge_root(EDGE_T edge, EDGE_T root);
 EDGE_T* build_edge_set(VERTEX_TREE_T &tree, VERTEX_T* vertex_set, int** set_table);
 void print_edge_set(EDGE_T* &set, int size);
-
 
 
 #endif
