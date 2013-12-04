@@ -38,7 +38,6 @@ void find_depth(VERTEX_T leaf_vertex)
 	VERTEX_T * ptr = &leaf_vertex;
 	while(ptr->DEPTH == 0 && ptr->ROOT != 0)
 	{
-		cout << "DEPTH : " << depth << "\n";
 		depth--;
 		ptr = ptr->ROOT;
 	}
@@ -67,7 +66,7 @@ void set_vertex_root(VERTEX_T &vertex, VERTEX_T &root)
 int vertex_find(VERTEX_T &vertex)
 {
 	int ID = vertex.ID;
-	//cout << "VERTEX ROOT " << vertex.ID << "\n";
+
 	if(vertex.ROOT != 0)
 		ID = vertex_find(*vertex.ROOT);
 
@@ -77,74 +76,33 @@ int vertex_find(VERTEX_T &vertex)
 // DO union(v1, v2)
 void vertex_union(VERTEX_TREE_T &tree, VERTEX_T &vertex_v1, VERTEX_T &vertex_v2)
 {
-	cout << "UNION : " << vertex_v1.ID << " & " << vertex_v2.ID << "\n";
 	VERTEX_T *v1_root = find_vertex_by_id(tree, vertex_find(vertex_v1));
-	cout << "V1 ROOT ID: " << v1_root->ID << "\n";
 	VERTEX_T *v2_root = find_vertex_by_id(tree, vertex_find(vertex_v2));
-
-	
-	cout << "V2 ROOT ID: " << v2_root->ID << "\n";
 
 	if(v1_root == v2_root)
 	{
-		cout << "SKIP\n";
-		/*
-		if(vertex_v1.DEPTH > vertex_v2.DEPTH)
-		{
-			cout << "CASE 1\n";
-			vertex_v2.ROOT = vertex_v1.ROOT;
-			vertex_v1.DEPTH--;
-		}
-		else if (vertex_v1.DEPTH < vertex_v2.DEPTH)
-		{
-			cout << "CASE 2\n";
-			vertex_v1.ROOT = vertex_v2.ROOT;
-			//if(vertex_v1.DEPTH < vertex_v2.DEPTH)
-				//vertex_union(tree, vertex_v1, vertex_v2);
-			vertex_v2.DEPTH--;
-		}
-		
-		if( vertex_v1.ROOT->DEPTH > vertex_v2.ROOT->DEPTH )
-		{
-			cout << "DO SOMETHING\n";
-			vertex_v1.ROOT = vertex_v2.ROOT;
-		}
-		*/
 		return;
 	}
 
 	if(v1_root->DEPTH > v2_root->DEPTH)
 	{
-		cout << "CASE 3\n";
 		v1_root->ROOT = v2_root;
-		//v2_root->DEPTH--;
-		
+
 	}
 	else if (v1_root->DEPTH < v2_root->DEPTH)
 	{
-		cout << "CASE 4\n";
 		v2_root->ROOT = v1_root;
-		//v1_root->DEPTH--;
-
 	}
 	else
 	{
-
-
 		v1_root->ROOT = v2_root;
 		v2_root->DEPTH--;
-		cout << "CASE 5\n";
-		print_tree(tree);
+
 		v1_root = find_vertex_by_id(tree, vertex_find(vertex_v1));
 		v2_root = find_vertex_by_id(tree, vertex_find(vertex_v2));
 
-		cout << "V1 ROOT ID: " << v1_root->ID << "\n";
-		cout << "V2 ROOT ID: " << v2_root->ID << "\n";
-
 		if( vertex_v1.ROOT->DEPTH != v1_root->DEPTH)
 		{
-			cout << "DO SOMETHING!!!!!\n";
-			//vertex_v2.ROOT = v2_root;
 			if(vertex_v1.DEPTH == vertex_v2.DEPTH)
 			{
 				vertex_v1.ROOT = vertex_v1.ROOT->ROOT;
@@ -153,11 +111,7 @@ void vertex_union(VERTEX_TREE_T &tree, VERTEX_T &vertex_v1, VERTEX_T &vertex_v2)
 			else
 				vertex_v2.ROOT = v2_root;
 		}
-
 	}
-	
-
-
 }
 
 
@@ -166,18 +120,12 @@ void set_vertex_root(VERTEX_TREE_T &tree , int vertex, int root)
 {
 	vertex_union(tree, *find_vertex_by_id(tree, vertex), *find_vertex_by_id(tree, root));
 }
-/*
-void set_vertex_root_from_edge(EDGE_T edge)
-{
-	set_vertex_root(*edge.v1, *edge.v2);
-}
-*/
+
 VERTEX_TREE_T make_vertex_tree(int number_of_vertex)
 {
 	VERTEX_TREE_T TREE;
 	TREE.TREE = new VERTEX_T*[number_of_vertex];
 	TREE.number_in_tree = 0;
-
 
 	return TREE;
 }
@@ -190,10 +138,7 @@ void insert_to_vertex_tree(VERTEX_TREE_T &tree, VERTEX_T &vertex)
 
 void print_tree(VERTEX_TREE_T tree)
 {
-	for(int i = 0 ; i < tree.number_in_tree ; i++)
-	{
-		//find_depth(*tree.TREE[i]);
-	}
+
 	for(int i = 0 ; i < tree.number_in_tree ; i++)
 	{
 		if(tree.TREE[i]->ROOT == 0 && tree.TREE[i]->DEPTH < 0)
@@ -231,12 +176,14 @@ VERTEX_T* find_vertex_by_id(VERTEX_TREE_T &tree ,int ID)
 bool vertex_mst(VERTEX_TREE_T tree)
 {
 	int root_count = 0;
+	int mst_tree_count = 0;
 	bool result = true;
 
 	for(int i=0 ; i < tree.number_in_tree ; i++)
 	{
 		if(tree.TREE[i]->ROOT == 0 && tree.TREE[i]->DEPTH < 0)
 		{
+			mst_tree_count++;
 			root_count++;
 			if(root_count > 1)
 				result = false;
@@ -245,7 +192,11 @@ bool vertex_mst(VERTEX_TREE_T tree)
 		{
 			result = false;
 		}
+		else
+			mst_tree_count++;
 	}
+	tree.mst_count = mst_tree_count;
+	
 
 	return result;
 
@@ -268,5 +219,36 @@ void print_vertex_tree(VERTEX_T &leaf_vertex)
 	cout << "ID : " << leaf_vertex.ID << "  DEPTH : " << leaf_vertex.DEPTH <<  "\n";
 }
 
+void set_vertex_set_id_array(VERTEX_TREE_T tree, int* &array)
+{
+	for(int i=0 ; i < tree.number_in_tree ; i++)
+	{
+		if(tree.TREE[i]->ROOT == 0 && tree.TREE[i]->DEPTH < 0)
+		{
+			array[i] = tree.TREE[i]->DEPTH ;
+		}
+		else if (tree.TREE[i]->ROOT == 0)
+		{
+			array[i] = 0;
+		}
+		else 
+		{
+			array[i] = tree.TREE[i]->ROOT->ID; 
+		}
+	}
 
+}
+
+bool arrays_same(int* &array1, int* &array2, int size)
+{
+	for(int i=0 ; i < size ; i++)
+	{	
+		if(array1[i] != array2[i])
+		{
+			return false;
+		}
+	}
+	
+	return true;
+}
 

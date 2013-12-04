@@ -179,22 +179,27 @@ EDGE_T DeleteTopElement(HEAP &i_heap, heap_type type)
     EDGE_T DELETED_EDGE = i_heap.get_edge(1);
     i_heap.set_heap_element(1, i_heap.get_edge(i_heap.get_size()));
     i_heap.dec_size();
-
     for(int i=floor(i_heap.get_size()/2); i >= 1 ; i--)
     {
         Heapify(i_heap, i, type);
     }  
-
     return DELETED_EDGE; 
 }
 
-void DeleteTopAndSetRoot(HEAP &i_heap, VERTEX_TREE_T &tree, heap_type type)
+/******************************************************************************
+* FUNCTION: DeleteTopAndSetRoot(HEAP &i_heap, VERTEX_TREE_T &tree, heap_type type)
+******************************************************************************/
+
+EDGE_T DeleteTopAndSetRoot(HEAP &i_heap, VERTEX_TREE_T &tree, heap_type type)
 {
-	//set_vertex_root_from_edge(DeleteTopElement(i_heap, type));
 	EDGE_T TEMP = DeleteTopElement(i_heap, type);
 	set_vertex_root(tree, TEMP.v1->ID, TEMP.v2->ID);
-	//set_vertex_root(*TEMP.v1, *TEMP.v2);
+	return TEMP;
 }
+
+/******************************************************************************
+* FUNCTION: print_heap(HEAP &i_heap)
+******************************************************************************/
 
 void print_heap(HEAP &i_heap)
 {

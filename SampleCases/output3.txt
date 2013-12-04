@@ -1,0 +1,58 @@
+Set Structure:
+0, 0, 0, 0, 0, 0, 0, 0
+
+Heap Structure:
+1, 2, 6, 3, 4, 9, 8, 7, 10, 5
+
+Heap Structure:
+2, 3, 6, 5, 4, 9, 8, 7, 10
+
+Set Structure:
+2, -1, 0, 0, 0, 0, 0, 0
+
+Heap Structure:
+3, 4, 6, 5, 10, 9, 8, 7
+
+Set Structure:
+2, -1, 4, -1, 0, 0, 0, 0
+
+Heap Structure:
+4, 5, 6, 7, 10, 9, 8
+
+Set Structure:
+2, -1, 4, -1, 6, -1, 0, 0
+
+Heap Structure:
+5, 7, 6, 8, 10, 9
+
+Set Structure:
+2, -1, 4, -1, 6, -1, 8, -1
+
+Heap Structure:
+6, 7, 9, 8, 10
+
+Set Structure:
+2, 6, 4, -1, 6, -2, 8, -1
+
+Heap Structure:
+7, 8, 9, 10
+
+Set Structure:
+2, 6, 4, 8, 6, -2, 8, -2
+
+Heap Structure:
+8, 10, 9
+
+Set Structure:
+6, 6, 8, 8, 6, 8, 8, -3
+
+MST:
+1 2 1
+3 4 2
+5 6 3
+7 8 4
+2 6 5
+4 8 6
+1 3 7
+
+Total Cost: 28

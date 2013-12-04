@@ -30,6 +30,7 @@ struct VERTEX_TREE_T
 {
 	VERTEX_T* (*TREE);
 	int number_in_tree;
+	int mst_count;
 };
 
 
@@ -43,6 +44,8 @@ void insert_to_vertex_tree(VERTEX_TREE_T &tree, VERTEX_T &vertex);
 void print_tree(VERTEX_TREE_T tree);
 VERTEX_T* find_vertex_by_id(VERTEX_TREE_T &tree ,int ID);
 bool vertex_mst(VERTEX_TREE_T tree);
+void set_vertex_set_id_array(VERTEX_TREE_T tree, int* &array);
+bool arrays_same(int* &array1, int* &array2, int size);
 
 
 #endif
